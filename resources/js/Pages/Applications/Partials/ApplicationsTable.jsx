@@ -39,6 +39,18 @@ export default function ApplicationsTable({ applications, queryParams = null }) 
         <>
             <div className="overflow-auto bg-white shadow-sm sm:rounded-lg mt-6">
                 <div className="py-6 text-gray-900">
+                    <div className="flex justify-left mb-6 ml-6">
+                        <div className="flex">
+                            <input
+                                type="text"
+                                name="company_name"
+                                id="company_name"
+                                placeholder="Search by company name"
+                                className="block w-64 mt-1 mr-2 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                onSubmit={(e) => searchFieldChanged('company_name', e.target.value)}
+                            />
+                        </div>
+                    </div>
                     {applications.length === 0 ? (
                         <p>No applications found.</p>
                     ) : (

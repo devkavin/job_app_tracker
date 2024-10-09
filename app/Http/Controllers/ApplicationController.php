@@ -11,11 +11,38 @@ class ApplicationController extends Controller
     /**
      * Display a listing of the resource.
      */
+    // public function index()
+    // {
+    //     try {
+    //         // $applications = Application::all()->forPage(1, 10);
+    //         $applications = Application::paginate(10);
+    //         // return to react component
+    //         return Inertia::render('Applications/Index', [
+    //             'applications' => $applications,
+    //             'success' => session('success'),
+    //         ]);
+    //     } catch (\Exception $e) {
+    //         return redirect()->back()->with('error', $e->getMessage());
+    //     }
+    // }
     public function index()
     {
         try {
-            // $applications = Application::all()->forPage(1, 10);
-            $applications = Application::paginate(10);
+            $query = Application::query();
+
+            $sortField = request("sort_field", 'created_at');
+            $sortDirection = request("sort_direction", 'desc');
+
+            if (request("company_name")) {
+                $query->where("company_name", "like", "%" . request("company_name") . "%");
+            }
+            if (request("position")) {
+                $query->where("position", "like", "%" . request("position") . "%");
+            }
+
+            $applications = $query->orderBy($sortField, $sortDirection)
+                ->paginate(10);
+
             // return to react component
             return Inertia::render('Applications/Index', [
                 'applications' => $applications,
