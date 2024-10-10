@@ -1,5 +1,8 @@
 
 import Pagination from "@/Components/Pagination";
+import PrimaryButton from "@/Components/PrimaryButton";
+import SecondaryButton from "@/Components/SecondaryButton";
+import TextInput from "@/Components/TextInput";
 import { Link, router } from "@inertiajs/react";
 
 export default function ApplicationsTable({ applications, queryParams = null }) {
@@ -40,15 +43,33 @@ export default function ApplicationsTable({ applications, queryParams = null }) 
             <div className="overflow-auto bg-white shadow-sm sm:rounded-lg mt-6">
                 <div className="py-6 text-gray-900">
                     <div className="flex justify-left mb-6 ml-6">
+                        {/* TODO: ADD SEARCH RESET BUTTON */}
                         <div className="flex">
-                            <input
-                                type="text"
-                                name="company_name"
-                                id="company_name"
-                                placeholder="Search by company name"
-                                className="block w-64 mt-1 mr-2 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                onSubmit={(e) => searchFieldChanged('company_name', e.target.value)}
-                            />
+                            <form
+                                className="flex"
+                            >
+                                <TextInput
+                                    id="company_name"
+                                    type="text"
+                                    name="company_name"
+                                    className="mt-1 block w-full"
+                                    placeholder="Search Company Name"
+                                    onKeyPress={(e) => onKeyPress('company_name', e)}
+                                />
+                                <PrimaryButton
+                                    onClick={() => searchFieldChanged('search', document.getElementById('search').value)}
+                                    className="ml-2"
+                                >
+                                    Search
+                                </PrimaryButton>
+                                <SecondaryButton
+                                    onClick={() => searchFieldChanged('search', '')}
+                                    className="ml-2"
+                                >
+                                    Reset
+                                </SecondaryButton>
+
+                            </form>
                         </div>
                     </div>
                     {applications.length === 0 ? (
@@ -67,16 +88,10 @@ export default function ApplicationsTable({ applications, queryParams = null }) 
                                         Reffered By
                                     </th>
                                     <th className="px-3 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                        Responded To Email
-                                    </th>
-                                    <th className="px-3 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                         Applied
                                     </th>
                                     <th className="px-3 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                         Interview Called
-                                    </th>
-                                    <th className="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                        Date Of Interview
                                     </th>
                                     <th className="px-15 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                         Application Message
@@ -102,16 +117,10 @@ export default function ApplicationsTable({ applications, queryParams = null }) 
                                             {application.referred_by}
                                         </td>
                                         <td className="px-3 py-4 whitespace-no-wrap">
-                                            {application.responded_to_email}
-                                        </td>
-                                        <td className="px-3 py-4 whitespace-no-wrap">
                                             {application.applied_for_position}
                                         </td>
                                         <td className="px-3 py-4 whitespace-no-wrap">
                                             {application.interview_called}
-                                        </td>
-                                        <td className="px-6 py-4 whitespace-no-wrap">
-                                            {application.date_of_interview}
                                         </td>
                                         <td className="px-15 py-4 whitespace-no-wrap">
                                             {application.application_message != '-' ? application.application_message.slice(0, 20) + '...' : application.application_message}
@@ -134,6 +143,17 @@ export default function ApplicationsTable({ applications, queryParams = null }) 
                                                 className="text-indigo-600 hover:text-indigo-900"
                                             >
                                                 View
+                                            </Link>
+                                            <Link
+                                                href={route(
+                                                    'applications.destroy',
+                                                    application.id
+                                                )}
+                                                method="delete"
+                                                as="button"
+                                                className="text-red-600 hover:text-red-900 ml-4"
+                                            >
+                                                Delete
                                             </Link>
                                         </td>
                                     </tr>

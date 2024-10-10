@@ -108,7 +108,23 @@ class ApplicationController extends Controller
      */
     public function update(Request $request, Application $application)
     {
-        //
+        try {
+            $validated = $request->validate([
+                'company_name' => 'required|string|max:255',
+                'position' => 'required|string|max:255',
+                'referred_by' => 'required|string|max:255',
+                'applied_for_position' => 'required|string|max:255',
+                'interview_called' => 'required|string|max:255',
+                'application_message' => 'required|string',
+                'vacancy_link' => 'required|string|max:255',
+            ]);
+
+            $application->update($validated);
+
+            return redirect()->route('applications.index')->with('success', 'Application Updated successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('errors', $e->getMessage());
+        }
     }
 
     /**
@@ -116,6 +132,14 @@ class ApplicationController extends Controller
      */
     public function destroy(Application $application)
     {
-        //
+        try {
+            $company_name = $application->company_name;
+            $position = $application->position ?? 'position';
+            $application->delete();
+
+            return redirect()->route('applications.index')->with('success', 'Application for ' . $company_name . ' ' . $position . ' deleted successfully.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('errors', $e->getMessage());
+        }
     }
 }
