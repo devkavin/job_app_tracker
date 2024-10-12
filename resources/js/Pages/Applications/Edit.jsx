@@ -4,6 +4,7 @@ import TextAreaInput from "@/Components/TextAreaInput";
 import TextInput from "@/Components/TextInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, useForm } from '@inertiajs/react';
+import AddApplicationForm from "./Partials/AddApplicationForm";
 
 export default function Edit({ auth, application }) {
     const { data, setData, patch, processing, errors } = useForm({
@@ -154,6 +155,7 @@ export default function Edit({ auth, application }) {
                                     {processing ? 'Saving...' : 'Save'}
                                 </PrimaryButton>
                             </div>
+                            <AddApplicationForm data={data} setData={setData} />
                         </form>
 
                     </div>

@@ -43,7 +43,6 @@ export default function ApplicationsTable({ applications, queryParams = null }) 
             <div className="overflow-auto bg-white shadow-sm sm:rounded-lg mt-6">
                 <div className="py-6 text-gray-900">
                     <div className="flex justify-left mb-6 ml-6">
-                        {/* TODO: ADD SEARCH RESET BUTTON */}
                         <div className="flex">
                             <form
                                 className="flex"
