@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\InterviewStatus;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class InterviewStatusController extends Controller
 {
@@ -12,7 +13,16 @@ class InterviewStatusController extends Controller
      */
     public function index()
     {
-        //
+        try {
+            $interviewStatuses = InterviewStatus::all();
+
+            return Inertia::render('InterviewStatuses/Index', [
+                'interviewStatuses' => $interviewStatuses,
+                'success' => session('success'),
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 
     /**

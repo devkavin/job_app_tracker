@@ -110,13 +110,13 @@ class ApplicationController extends Controller
     {
         try {
             $validated = $request->validate([
-                'company_name' => 'required|string|max:255',
-                'position' => 'required|string|max:255',
-                'referred_by' => 'required|string|max:255',
-                'applied_for_position' => 'required|string|max:255',
-                'interview_called' => 'required|string|max:255',
-                'application_message' => 'required|string',
-                'vacancy_link' => 'required|string|max:255',
+                'company_name'          => 'required|string|max:255',
+                'position'              => 'required|string|max:255',
+                'referred_by'           => 'required|string|max:255',
+                'applied_for_position'  => 'required|string|max:255',
+                'interview_called'      => 'required|string|max:255',
+                'application_message'   => 'required|string',
+                'vacancy_link'          => 'required|string|max:255',
             ]);
 
             $application->update($validated);
